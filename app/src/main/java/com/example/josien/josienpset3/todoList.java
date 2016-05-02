@@ -1,7 +1,13 @@
 package com.example.josien.josienpset3;
 
+/*    Pset 3: to-do list
+/**   Josien Jansen
+/**   11162295
+/**   Universiteit van Amsterdam
+ */
 /**
  * Created by Josien on 29-4-2016.
+
  */
 public class todoList {
 

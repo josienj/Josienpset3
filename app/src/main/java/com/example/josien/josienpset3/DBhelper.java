@@ -6,6 +6,12 @@ import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.Cursor;
+
+/*    Pset 3: to-do list
+/**   Josien Jansen
+/**   11162295
+/**   Universiteit van Amsterdam
+ */
 /**
  * Created by Josien on 29-4-2016.
  */
