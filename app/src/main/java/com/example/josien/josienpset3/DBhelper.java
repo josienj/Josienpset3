@@ -2,16 +2,12 @@ package com.example.josien.josienpset3;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.Cursor;
 
-/*    Pset 3: to-do list
-/**   Josien Jansen
-/**   11162295
-/**   Universiteit van Amsterdam
- */
+import java.util.ArrayList;
+
 /**
  * Created by Josien on 29-4-2016.
  */
@@ -42,12 +38,14 @@ public class DBhelper extends SQLiteOpenHelper{
     }
 
     //Add a new row to the database
-    public void addTodo(todoList todoList){
+    public void addTodo(todoList todoList) {
         ContentValues values = new ContentValues();
         values.put(COLUMN_TODO, todoList.get_todo());
         SQLiteDatabase db = getWritableDatabase();
-        db.insert(TABLE_todoList, null,values);
+        long itemId = db.insert(TABLE_todoList, null,values);
         db.close();
+
+        todoList.set_id(((int) itemId));
     }
 
     //delete a item from the database
@@ -59,20 +57,30 @@ public class DBhelper extends SQLiteOpenHelper{
         db.close();
     }
 
-    //print out the database as a string
-    public String databasetoString(){
-        String dbString = "";
+    // get all todolist items from the database
+    public ArrayList<todoList> retrieveTodoLists(){
+        ArrayList<todoList> todoListsArray = new ArrayList<todoList>();
+
         SQLiteDatabase db = getWritableDatabase();
         String query = "SELECT * FROM " + TABLE_todoList + " WHERE 1";
 
         Cursor c = db.rawQuery(query, null);
-        //move to the first row in your results
-        c.moveToFirst();
+        // move to the first row in your results
+        // If the result is empty, we don't do anything
+        if (c.moveToFirst()) {
+            // Loop through all results
+            do {
+                // Create a new todoList object and set the correct data
+                todoList todo = new todoList();
+                todo.set_id(c.getInt(0));
+                todo.set_todo(c.getString(1));
 
-        while (c.moveToNext());
+                todoListsArray.add(todo);
+            } while (c.moveToNext()) ;
+        }
 
         db.close();
-        return dbString;
+        return todoListsArray;
     }
 
 
