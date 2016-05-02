@@ -1,5 +1,8 @@
 package com.example.josien.josienpset3;
-
+/* Josien Jansen
+*  11162295
+*  Universiteit van Amsterdam
+*/
 /**
  * Created by Josien on 29-4-2016.
  */

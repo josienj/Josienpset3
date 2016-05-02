@@ -1,5 +1,10 @@
 package com.example.josien.josienpset3;
 
+/* Josien Jansen
+*  11162295
+*  Universiteit van Amsterdam
+*/
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -30,6 +35,18 @@ public class DBhelper extends SQLiteOpenHelper{
                 COLUMN_TODO + " TEXT " +
                 ")";
         db.execSQL(query);
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_TODO, "This is a to-do");
+        db.insert(TABLE_todoList, null, values);
+
+        values = new ContentValues();
+        values.put(COLUMN_TODO, "Add one in the box below");
+        db.insert(TABLE_todoList, null, values);
+
+        values = new ContentValues();
+        values.put(COLUMN_TODO, "Delete your todo's by long-pressing");
+        db.insert(TABLE_todoList, null, values);
     }
 
     @Override

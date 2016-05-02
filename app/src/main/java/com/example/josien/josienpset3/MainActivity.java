@@ -1,14 +1,18 @@
 package com.example.josien.josienpset3;
 
+/* Josien Jansen
+*  11162295
+*  Universiteit van Amsterdam
+*/
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -30,16 +34,25 @@ public class MainActivity extends AppCompatActivity {
         setupTodoListView();
     }
 
-    public void addTodo(View view){
-        // Maybe add a check so someone doesn't add an empty value.
+    public void addTodo(View view) {
 
-        todoList todo = new todoList(editText.getText().toString());
-        DBhelper.addTodo(todo);
-        // Add item to the ListView
-        listAdapter.add(todo);
+        String input = String.valueOf(editText.getText());
 
-        // Clear the input field
-        editText.setText("");
+        // Check for correct input.
+        if (!input.matches("[a-zA-Z\\s]+")) {
+            Toast.makeText(this, "You have to fill in something", Toast.LENGTH_LONG).show();
+            return;
+        } else {
+
+            todoList todo = new todoList(editText.getText().toString());
+
+            DBhelper.addTodo(todo);
+            // Add item to the ListView
+            listAdapter.add(todo);
+            Toast.makeText(this, "To-do is added!", Toast.LENGTH_LONG).show();
+            // Clear the input field
+            editText.setText("");
+        }
     }
 
     public void setupTodoListView(){
@@ -64,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
                 DBhelper.delete(item.get_id());
                 // Delete item from listView
                 listAdapter.remove(item);
-
+                Toast.makeText(getApplicationContext(), "Deleted", Toast.LENGTH_LONG).show();
                 return false;
             }
         });
