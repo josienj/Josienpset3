@@ -19,32 +19,35 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     EditText editText;
-    ListView newlist;
+    ListView newList;
     DBhelper DBhelper;
-    ArrayAdapter<todoList> listAdapter;
+    ArrayAdapter<TodoList> listAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        editText = (EditText) findViewById(R.id.edittext);
-        newlist = (ListView) findViewById(R.id.list_view);
+        editText = (EditText) findViewById(R.id.todo_edittext);
+        newList = (ListView) findViewById(R.id.list_view);
         DBhelper = new DBhelper(this, null, null, 1);
 
         setupTodoListView();
     }
 
+    /*
+    * Add a to-do into the database
+    */
     public void addTodo(View view) {
 
         String input = String.valueOf(editText.getText());
 
         // Check for correct input.
-        if (!input.matches("[a-zA-Z\\s]+")) {
-            Toast.makeText(this, "You have to fill in something", Toast.LENGTH_LONG).show();
-            return;
-        } else {
+        if (!input.matches("[a-zA-Z1-9\\s]+")) {
+            Toast.makeText(this, "Input isn't correct, try again", Toast.LENGTH_LONG).show();
+        }
+        else {
 
-            todoList todo = new todoList(editText.getText().toString());
+            TodoList todo = new TodoList(editText.getText().toString());
 
             DBhelper.addTodo(todo);
             // Add item to the ListView
@@ -55,32 +58,33 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /*
+    * Combine the listview and database correctly
+    */
     public void setupTodoListView(){
 
-        final ArrayList<todoList> todoListArray = DBhelper.retrieveTodoLists();
+        final ArrayList<TodoList> todoListArray = DBhelper.retrieveTodoLists();
 
         // Make a new ArrayAdapter to handle the objects, and add them to the view
-        // The simple_list_item_1 and text1 are Android defaults
-        listAdapter = new ArrayAdapter<todoList>(this,
+        listAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, android.R.id.text1, todoListArray);
 
         // Apply the adapter on the ViewList
-        newlist.setAdapter(listAdapter);
+        newList.setAdapter(listAdapter);
 
-        // Add a new on click listener.
-        newlist.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        // Add a new on click listener
+        newList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 // Clicked item value
-                todoList item = (todoList) newlist.getItemAtPosition(position);
+                TodoList item = (TodoList) newList.getItemAtPosition(position);
                 // Delete item from database
-                DBhelper.delete(item.get_id());
+                DBhelper.deleteItem(item.get_id());
                 // Delete item from listView
                 listAdapter.remove(item);
                 Toast.makeText(getApplicationContext(), "Deleted", Toast.LENGTH_LONG).show();
                 return false;
             }
         });
-
     }
 }

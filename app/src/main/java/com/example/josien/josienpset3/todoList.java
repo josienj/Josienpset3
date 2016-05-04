@@ -3,19 +3,17 @@ package com.example.josien.josienpset3;
 *  11162295
 *  Universiteit van Amsterdam
 */
-/**
- * Created by Josien on 29-4-2016.
- */
-public class todoList {
+
+public class TodoList {
 
     private int _id;
     private String _todo;
 
-    public todoList () {
+    public TodoList () {
 
     }
 
-    public todoList(String _todo) {
+    public TodoList(String _todo) {
         this._todo = _todo;
     }
 

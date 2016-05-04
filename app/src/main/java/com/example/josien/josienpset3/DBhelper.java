@@ -13,9 +13,6 @@ import android.database.Cursor;
 
 import java.util.ArrayList;
 
-/**
- * Created by Josien on 29-4-2016.
- */
 public class DBhelper extends SQLiteOpenHelper{
 
     private static final int DATABASE_VERSION = 1;
@@ -36,6 +33,7 @@ public class DBhelper extends SQLiteOpenHelper{
                 ")";
         db.execSQL(query);
 
+        // Create three to-do examples when starting app for the first time
         ContentValues values = new ContentValues();
         values.put(COLUMN_TODO, "This is a to-do");
         db.insert(TABLE_todoList, null, values);
@@ -54,8 +52,10 @@ public class DBhelper extends SQLiteOpenHelper{
         db.execSQL("DROP TABLE IF EXISTS" + TABLE_todoList);
     }
 
-    //Add a new row to the database
-    public void addTodo(todoList todoList) {
+    /*
+    * Add a new row to the database
+    */
+    public void addTodo(TodoList todoList) {
         ContentValues values = new ContentValues();
         values.put(COLUMN_TODO, todoList.get_todo());
         SQLiteDatabase db = getWritableDatabase();
@@ -65,30 +65,33 @@ public class DBhelper extends SQLiteOpenHelper{
         todoList.set_id(((int) itemId));
     }
 
-    //delete a item from the database
-    //has to be longclick
 
-    public void delete (int id){
+    /*
+    * Delete an item from the database
+    */
+    public void deleteItem (int id){
         SQLiteDatabase db = getWritableDatabase();
         db.delete(TABLE_todoList, "_id = ?", new String[] {String.valueOf(id)});
         db.close();
     }
 
-    // get all todolist items from the database
-    public ArrayList<todoList> retrieveTodoLists(){
-        ArrayList<todoList> todoListsArray = new ArrayList<todoList>();
+    /*
+    * Get all todolist items from the database
+    */
+    public ArrayList<TodoList> retrieveTodoLists(){
+        ArrayList<TodoList> todoListsArray = new ArrayList<>();
 
         SQLiteDatabase db = getWritableDatabase();
         String query = "SELECT * FROM " + TABLE_todoList + " WHERE 1";
 
         Cursor c = db.rawQuery(query, null);
-        // move to the first row in your results
-        // If the result is empty, we don't do anything
+
+        // Move to the first row in your results
         if (c.moveToFirst()) {
             // Loop through all results
             do {
                 // Create a new todoList object and set the correct data
-                todoList todo = new todoList();
+                TodoList todo = new TodoList();
                 todo.set_id(c.getInt(0));
                 todo.set_todo(c.getString(1));
 
@@ -97,9 +100,7 @@ public class DBhelper extends SQLiteOpenHelper{
         }
 
         db.close();
+        c.close();
         return todoListsArray;
     }
-
-
-
 }
