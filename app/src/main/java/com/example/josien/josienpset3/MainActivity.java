@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Check for correct input.
         if (!input.matches("[a-zA-Z1-9\\s]+")) {
-            Toast.makeText(this, "Input isn't correct, try again", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Input isn't correct, try again", Toast.LENGTH_SHORT).show();
         }
         else {
 
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
             DBhelper.addTodo(todo);
             // Add item to the ListView
             listAdapter.add(todo);
-            Toast.makeText(this, "To-do is added!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "To-do is added!", Toast.LENGTH_SHORT).show();
             // Clear the input field
             editText.setText("");
         }
@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
                 DBhelper.deleteItem(item.get_id());
                 // Delete item from listView
                 listAdapter.remove(item);
-                Toast.makeText(getApplicationContext(), "Deleted", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Deleted", Toast.LENGTH_SHORT).show();
                 return false;
             }
         });
