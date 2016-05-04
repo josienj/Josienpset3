@@ -16,6 +16,12 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+/*
+* Handles everything the user could do with the app
+* Like add a to-do and store it in the database & listview
+* Update everything that changes
+ */
+
 public class MainActivity extends AppCompatActivity {
 
     EditText editText;

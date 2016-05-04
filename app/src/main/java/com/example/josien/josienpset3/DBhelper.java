@@ -13,6 +13,9 @@ import android.database.Cursor;
 
 import java.util.ArrayList;
 
+/*
+*  Create a SQLdatabase
+*/
 public class DBhelper extends SQLiteOpenHelper{
 
     private static final int DATABASE_VERSION = 1;
